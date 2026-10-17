@@ -4,7 +4,7 @@ import { createClient, type RedisClientType } from 'redis';
 
 @Injectable()
 export class RedisService implements OnModuleInit, OnModuleDestroy {
-	private readonly client: RedisClientType;
+	public readonly client: RedisClientType;
 
 	public constructor(private readonly configService: ConfigService) {
 		this.client = createClient({
