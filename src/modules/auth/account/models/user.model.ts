@@ -17,7 +17,7 @@ export class UserModel implements User {
   public username: string;
 
   @Field(() => String)
-  public display_name: string;
+  public displayName: string;
 
   @Field(() => String, { nullable: true })
   public avatar: string;
@@ -25,9 +25,15 @@ export class UserModel implements User {
   @Field(() => String, { nullable: true })
   public age: string;
 
-  @Field(() => Date)
-  public created_at: Date;
+	@Field(() => Boolean)
+	public isVerified: boolean;
+
+	@Field(() => Boolean)
+	public isEmailVerified: boolean;
 
   @Field(() => Date)
-  public updated_up: Date;
+  public createdAt: Date;
+
+  @Field(() => Date)
+  public updatedUp: Date;
 }

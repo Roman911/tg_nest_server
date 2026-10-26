@@ -3,10 +3,11 @@ import { hash } from 'argon2';
 
 import { PrismaService } from '../../../core/prisma/prisma.service.js';
 import { CreateUserInput } from './inputs/create-user.input.js';
+import { VerificationService } from '../verification/verification.service.js';
 
 @Injectable()
 export class AccountService {
-  public constructor(private readonly prismaService: PrismaService) {}
+  public constructor(private readonly prismaService: PrismaService, private readonly verificationService: VerificationService) {}
 
   public async findAll() {
     return this.prismaService.user.findMany({
@@ -27,6 +28,8 @@ export class AccountService {
   public async create(input: CreateUserInput) {
     const { username, email, password } = input;
 
+		console.log(username, email, password);
+
     const [isUsernameExist, isEmailExist] = await Promise.all([
       this.prismaService.user.findUnique({
         where: { username },
@@ -44,28 +47,21 @@ export class AccountService {
       throw new ConflictException('Email already exists');
     }
 
-    try {
-      return await this.prismaService.user.create({
-        data: {
-          username,
-          email,
-          password: await hash(password),
-          display_name: username,
-          updated_up: new Date(),
-        },
-        omit: {
-          password: true,
-        },
-      });
-    } catch (error) {
-      if (
-        error instanceof Error &&
-        error.message.includes('Unique constraint')
-      ) {
-        throw new ConflictException('Username or email already exists');
-      }
+		const user = await this.prismaService.user.create({
+			data: {
+				username,
+				email,
+				password: await hash(password),
+				displayName: username,
+				// updated_up: new Date(),
+			},
+			// omit: {
+			//   password: true,
+			// },
+		});
 
-      throw error;
-    }
+		await this.verificationService.sendVerificationToken(user);
+
+		return true;
   }
 }

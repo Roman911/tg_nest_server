@@ -9,6 +9,8 @@ import { getGraphQLConfig } from './config/graphql.config.js';
 import { RedisModule } from './redis/redis.module.js';
 import { AccountModule } from '../modules/auth/account/account.module.js';
 import { SessionModule } from '../modules/auth/session/session.module.js';
+import { VerificationModule } from '../modules/auth/verification/verification.module.js';
+import { MailModule } from '../modules/libs/mail/mail.module.js';
 
 @Module({
   imports: [
@@ -24,8 +26,10 @@ import { SessionModule } from '../modules/auth/session/session.module.js';
     }),
     PrismaModule,
     RedisModule,
+		MailModule,
     AccountModule,
-    SessionModule
+    SessionModule,
+		VerificationModule
   ],
 })
 export class CoreModule {}

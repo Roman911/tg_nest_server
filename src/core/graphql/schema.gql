@@ -33,10 +33,11 @@ input LoginInput {
 
 type Mutation {
   clearSessionCookie: Boolean!
-  createUser(data: CreateUserInput!): UserModel!
+  createUser(data: CreateUserInput!): Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
   removeSession(id: String!): Boolean!
+  verifyAccount(data: VerificationInput!): UserModel!
 }
 
 type Query {
@@ -62,11 +63,17 @@ type SessionModel {
 type UserModel {
   age: String
   avatar: String
-  created_at: DateTime!
-  display_name: String!
+  createdAt: DateTime!
+  displayName: String!
   email: String!
   id: ID!
+  isEmailVerified: Boolean!
+  isVerified: Boolean!
   password: String!
-  updated_up: DateTime!
+  updatedUp: DateTime!
   username: String!
+}
+
+input VerificationInput {
+  token: String!
 }
