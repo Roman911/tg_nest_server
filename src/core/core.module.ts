@@ -7,10 +7,12 @@ import { PrismaModule } from './prisma/prisma.module.js';
 import { IS_DEV_ENV } from '../shared/utils/is-dev.util.js';
 import { getGraphQLConfig } from './config/graphql.config.js';
 import { RedisModule } from './redis/redis.module.js';
+
 import { AccountModule } from '../modules/auth/account/account.module.js';
 import { SessionModule } from '../modules/auth/session/session.module.js';
 import { VerificationModule } from '../modules/auth/verification/verification.module.js';
 import { MailModule } from '../modules/libs/mail/mail.module.js';
+import { PasswordRecoveryModule } from '../modules/auth/password-recovery/password-recovery.module.js';
 
 @Module({
   imports: [
@@ -29,7 +31,8 @@ import { MailModule } from '../modules/libs/mail/mail.module.js';
 		MailModule,
     AccountModule,
     SessionModule,
-		VerificationModule
+		VerificationModule,
+		PasswordRecoveryModule
   ],
 })
 export class CoreModule {}
