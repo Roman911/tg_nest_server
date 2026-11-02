@@ -13,6 +13,7 @@ import { SessionModule } from '../modules/auth/session/session.module.js';
 import { VerificationModule } from '../modules/auth/verification/verification.module.js';
 import { MailModule } from '../modules/libs/mail/mail.module.js';
 import { PasswordRecoveryModule } from '../modules/auth/password-recovery/password-recovery.module.js';
+import { TotpModule } from '../modules/auth/totp/totp.module.js';
 
 @Module({
   imports: [
@@ -32,7 +33,8 @@ import { PasswordRecoveryModule } from '../modules/auth/password-recovery/passwo
     AccountModule,
     SessionModule,
 		VerificationModule,
-		PasswordRecoveryModule
+		PasswordRecoveryModule,
+		TotpModule
   ],
 })
 export class CoreModule {}
